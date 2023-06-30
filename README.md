@@ -321,3 +321,55 @@ ggarrange(p2,p1+ stat_cor(p.accuracy = 0.001, r.accuracy = 0.01))
 ![8_daily steps, inactivity vs sleep](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/35421dfc-3bca-4e56-afca-54deab6f2a1a)
 It is clear that there is no relationship between daily steps taken and calories. However there is a significantl negative corelation between total minutes asleep and sedentary minutes with a negative r value of -0.6 and P < 0.001 . Which means that according to this analysis of around 30 fitbit users, people who tends to sleep less are more inactive or vice versa. There are studies that confirm the lack of excercise or sedentary lifestyle causing sleep issues(https://www.sleepfoundation.org/insomnia/exercise-and-insomnia#references-80044). 
 ### 4.5- Device usage
+It is very important for the stakeholders to understand the trend of the smart device usuage among the users so that they can device their marketing strategies accordingly. 
+```
+daily_use <- daily_activity_sleep %>% 
+  group_by(Id) %>% 
+  summarise(days_use = sum(n())) %>% 
+  mutate(usage = case_when(
+    days_use >= 1 & days_use <= 10 ~ "Low use",
+    days_use >= 11 & days_use <= 20 ~ "Moderate use",
+    days_use >= 21 & days_use <= 35 ~ "High use"
+  ))
+head(daily_use)
+```
+Here we have made a dataset where the users are grouped according to their device usage. 
+```
+percent_use <- daily_use %>% 
+group_by(usage) %>% 
+summarise(total = n()) %>% 
+mutate(totals = sum(total)) %>% 
+group_by(usage) %>% 
+summarise(total_percent = total/totals) %>% 
+mutate(labels = scales::percent(total_percent))
+```
+Then we have made a new dataframe calculating the percentage of the device usage.
+```
+week_usage_1 <- ggplot(data = percent_use, aes(x = "", y = total_percent, fill=usage)) +
+  geom_bar(stat = "identity", width = 1)+
+  coord_polar("y", start=0)+
+  theme_minimal()+ #A minimalistic theme with no background annotations#
+  theme(axis.title.x= element_blank(),
+        axis.title.y = element_blank(),
+        panel.border = element_blank(), 
+        panel.grid = element_blank(), 
+        axis.ticks = element_blank(),
+        axis.text.x = element_blank(),
+        plot.title = element_text(hjust = 0.5, size=14, face = "bold")) +
+  geom_text(aes(label = labels),
+            position = position_stack(vjust = 0.5))+
+  scale_fill_manual(values = c("#990053","#ff33a1","#ff99d0"),
+                    labels = c("High use - 21 to 35 days",
+                               "Moderate use - 11 to 20 days",
+                               "Low use - 1 to 10 days"))+
+  labs(title="Daily use of smart device")
+```
+Other than the daily use of the smart device, it would be nice to see the daily input of the data during the week by the users.
+```
+week_usage <- ggplot(data = daily_activity, aes(x=Weekday)) +
+  geom_bar(fill='#ff99d0', color='black') +
+  labs(title = "Data Input during the Week",x = "Days of the week", y = "Frequency")
+ggarrange(week_usage, week_usage_1)
+```
+![9_data input in week and days](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/d3dc8d54-7790-49e7-b9f7-12a276ec1ff9)
+According to theses results, the users have used the device most frequently during the week from Tue-Thurs. Only half of the users are frequently using the device.
