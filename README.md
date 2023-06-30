@@ -44,6 +44,7 @@ install.packages("tidyverse")
 install.packages("lubridate")
 install.packages("ggplot2")
 install.packages("ggpubr")
+install.packages("ggrepel")
 ```
 ```
 library(readr)
@@ -55,8 +56,9 @@ library(tidyverse)
 library(lubridate)
 library(ggpubr)
 library(ggplot2)
+library(ggrepel)
 ```
-### 1- The dailyActivity_merged dataset
+### 3.1- The dailyActivity_merged dataset
 #### summary
 ```
 skim_without_charts(dailyActivity_merged)
@@ -83,7 +85,7 @@ daily_activity <- daily_activity %>% mutate(Total_sedentary_hours = round(Total_
 daily_activity <- daily_activity[,c (1,2,17,3,4,16,18,15,5,6,7,8,9,10,11,12,13,14)] 
 colnames(daily_activity)
 ```
-### 2- The hourleySteps_merged dataset
+### 3.2- The hourleySteps_merged dataset
 #### summary
 ```
 glimpse(hourlySteps_merged)
@@ -97,7 +99,7 @@ Hourlysteps <- hourlySteps_merged %>% #sep date time column#
   mutate(ActivityHour = parse_date_time(ActivityHour, "m/d/y I:M:S p")) %>% 
   mutate(ActivityDate = as.Date(ActivityHour), ActivityHour = format(ActivityHour, format = "%H:%M:%S"))
 ```
-### 3- The SleepDay_merged datset
+### 3.3- The SleepDay_merged datset
 #### summary
 ```
 skim_without_charts(sleepDay_merged)
@@ -122,7 +124,7 @@ sleep_day <- sleepDay_merged %>% mutate(SleepDay = parse_date_time(SleepDay, "m/
   mutate(TotalHoursInBed = TotalTimeInBed/60) 
 sleep_day <- sleep_day %>% select(-SleepDay)
 ```
-### 4- The weightLogInfo_merged datset
+### 3.4- The weightLogInfo_merged datset
 #### summary
 ```
 skim_without_charts(weightLogInfo_merged)
@@ -135,3 +137,113 @@ sum(duplicated(weightLogInfo_merged))
 n_distinct(weightLogInfo_merged$Id) 
 ```
 There are 65 missing values from the column Fat and only 8 distinct Ids with no duplicates. I have dropped this dataset from my further analysis as the sample size is very small.
+
+## 4- Analyze and Share phase
+At first we wanted to analyze the trends in daily activity of fitbit users that can possibly help Bellabeat to device good marketing strategies.
+### 4.1- Distribution of activity in minutes
+The distribution of active minutes on the daily_activity dataset is presented in form of a pie chart.
+```
+active_sed <- data.frame(Type = c("Very Active Minutes", "Fairly Active Minutes","Lightly Active Minutes", "Sedentary Minutes"), 
+                         sums = c(sum(daily_activity$VeryActiveMinutes), sum(daily_activity$FairlyActiveMinutes),
+                         sum(daily_activity$LightlyActiveMinutes), sum(daily_activity$SedentaryMinutes))) 
+sum_all <- sum(active_sed$sums, na.rm=TRUE)
+active_sed <- active_sed %>%  mutate(Percent = (sums /sum_all) * 100)
+active_sed <- active_sed %>% mutate(Percent = round(Percent, digits = 2))
+```
+First we calculate the sum of different categories of activity minutes and then calculate the percentage by dividing each type of activity min with the sum of all minutes. 
+
+```
+df2 <- active_sed %>% 
+  mutate(csum = rev(cumsum(rev(Percent))), 
+         pos = Percent/2 + lead(csum, 1),
+         pos = if_else(is.na(pos), Percent/2, pos))
+```
+Making a dataframe to get the positions of the labels that will be used by the "geom_label_repel" from the ggrepel package to adds text directly to the plot and repel the text if they overlap.
+
+```
+ggplot(active_sed, aes(x = "" , y = Percent, fill = fct_inorder(Type)))+ 
+  geom_col(width = 1, color = 1) +
+  coord_polar(theta = "y") +
+  scale_fill_brewer(palette = "Pastel1") +
+  geom_label_repel(data = df2, aes(y = pos, label = paste0(Percent, "%")), 
+                   size = 4.5, nudge_x = 1, show.legend = FALSE) +
+  guides(fill = guide_legend(title = "Type")) +
+  ggtitle("Percentage of activity in minutes") +
+  theme_void()
+```
+![2_Percentage of activity in minutesRplot](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/ed3b6dd8-015f-4d1b-afa2-1c5d57f26bcc)
+As it is clearly seen that most of the time is spend being inactive only around 2% of the total time according to our fitbit data is spend being very active. We dived more deeper into the daily activity on the weekly basis.
+### 4.2- Weekly activity in hours
+Making a dataframe containing the mean of total steps, mean of calories burned, mean of active and sedentary hours spent each day in a week.
+```
+Weekly_activity_data <- daily_activity %>% 
+  group_by(Weekday) %>% 
+  summarise(MeanSteps = mean(TotalSteps), MeanCalories = mean(Calories), 
+            MeanActiveHours = mean(Total_active_hours), 
+            MeanSedentaryHours = mean(Total_sedentary_hours), TotalDistance = mean(TotalDistance), steps = sum(TotalSteps))
+```
+```
+ggarrange(
+  ggplot(data = Weekly_activity_data, aes(x = Weekday, y = MeanActiveHours)) +
+    geom_bar(stat = "identity", fill = 'darkgreen') +
+    geom_hline(yintercept = 4) +
+    labs(title = "Weekly Active data", x = "Days of week", y = "Mean Active Hours"),
+  ggplot(data = Weekly_activity_data, aes(x = Weekday, y = MeanSedentaryHours)) +
+    geom_bar(stat = "identity", fill = 'lightgreen') +
+    geom_hline(yintercept = 16) +
+    labs(title = "Weekly inactive data", x = "Days of week", y = "Mean Sedentary Hours"),
+  ggplot(data = Weekly_activity_data, aes(x = Weekday, y = MeanSteps)) +
+    geom_histogram(stat = "identity", fill = 'darkblue') +
+    geom_hline(yintercept = 8000) +
+    labs(title = "Weekly steps data", x = "Days of week", y = "Mean Steps")
+  )
+```
+![3_Weekly_summery](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/ce51d1ec-5071-4609-8b3c-d6707eadeb20)
+Users seems to be most active on Saturday spending around 4 hours being active and taking more than 8,000 steps. On the other hand Sunday seems to be the resting day of the week with less activity. However users are spending around 16hours being sedentary througout the week. Tuesday also seems to be to be a hectic day in terms of total steps taken. Next we wanted to see our activity data on the bases to user Ids.
+### 4.3- Identifying the user's class based on the total steps
+The total target of 10,000 steps is considered to be a healthy target for the healthy adults. According to the guidelines provided here (https://www.10000steps.org.au/articles/healthy-lifestyles/counting-steps/#:~:text=The%20following%20pedometer%20indices%20have,to%209%2C999%20steps%20per%20day) the users are divied into various categories. This serves the bases of our following analysis.
+```
+daily_activity_ids<- daily_activity %>% 
+  group_by(Id) %>% 
+  summarise(MeanSteps = mean(TotalSteps), MeanCalories = mean(Calories), 
+            MeanActiveHours = mean(Total_active_hours), 
+            MeanSedentaryHours = mean(Total_sedentary_hours), MeanTotalDistance = mean(TotalDistance), TotalSteps = sum(TotalSteps), 
+            TotalCalories = sum(Calories),
+            TotalDistance = sum(TotalDistance))
+daily_activity_ids <- daily_activity_ids %>% mutate(MeanActiveHours = round(MeanActiveHours, digits = 0)) 
+daily_activity_ids <- daily_activity_ids %>% mutate(MeanSedentaryHours = round(MeanSedentaryHours, digits = 0))
+```
+Making a seperate dataframe which contain the mean of total steps taken, calories burned, active and inactive hours and respective sums of total steps, calories and distance. 
+```
+daily_activity_ids <- daily_activity_ids %>% 
+  mutate(UsersActivityClass = case_when(
+    MeanSteps < 5000 ~ 'Sedentary', 
+    MeanSteps >= 5000 & MeanSteps < 7499 ~ 'Low Active', 
+    MeanSteps >= 7500 & MeanSteps < 9999 ~ 'Fairly Active', 
+    MeanSteps >= 10000 ~ 'Active', 
+    MeanSteps >= 12500 ~ 'HighlyActive'))
+```
+Now introducing a new column in the dataframe where users will be allorted a certain activity class based on the mean steps they have taken.
+```
+user_class <- daily_activity_ids %>% 
+  group_by(UsersActivityClass) %>% 
+  summarise(ActiveHours = mean(MeanActiveHours), MeanCal = mean(MeanCalories)) 
+user_class <- user_class %>% mutate(ActiveHours = round(ActiveHours, digits = 0)) %>% mutate(MeanCal = round(MeanCal, digits = 0))
+```
+Now grouping the user's activity classes to see how many hours a certain user class is active and how much calories they burn respectively.
+
+```
+ggarrange(
+  ggplot(data = daily_activity_ids, aes(x = UsersActivityClass)) +
+    geom_bar(fill='blue', color='black') +
+    labs(title = "Users Activity", x = "classes of users"),
+  ggplot(data = user_class, aes(x = UsersActivityClass , y = ActiveHours)) +
+    geom_bar(stat = "identity", fill ='steelblue', color= 'black') +
+    labs(title = "users vs active hours", x = "Users Class", y = "Mean Active Hours"),
+ggplot(data = mean_cal, aes(x = UsersActivityClass, y = meancal)) +
+  geom_bar(stat = "identity", fill = 'lightblue', color = 'black') +
+  labs(title = "Calories based on User Class", x = "User Activity Class", y = "Mean Calories"))
+```
+![5_Users_activity](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/3096da3c-10c3-4366-9d6e-5d02323e9da8)
+In the group of 33 fitbit users, there are more people who are fairly or low active which mean they take around 5,000 - 9,999 per day and are active for 4-5 hours. These users clearly also burns more calories as compared to the low active and sedentary ones.
+
