@@ -260,3 +260,63 @@ ggplot() +
 ```
 ![4_hourly_summary](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/db75796c-fae0-4868-8f56-f67de9a79871)
 As it can be seen people are more active during the afternoon(from around 12pm to 2:00pm) and in the evening (from 4:30pm to 7:00pm). 
+
+### 4.5- Merging the sleep_day and daily_activity datasets for Corelation analysis
+Merging the two datasets by same ids and dates for corelation studies.
+```
+sleep_day <- sleep_day %>% rename(Date = SleepDate) 
+daily_activity <- daily_activity %>% rename(Date = ActivityDate)
+daily_activity_sleep <- merge(daily_activity,sleep_day, by= c("Id", "Date"))
+daily_activity_sleep <- daily_activity_sleep %>% mutate(TotalHoursAsleep = round(TotalHoursAsleep, digits = 0)) %>% 
+  mutate(TotalHoursInBed = round(TotalHoursInBed, digits = 0))
+daily_activity_sleep$SleepWeekday <- factor(daily_activity_sleep$SleepWeekday, c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday", "Sunday"))
+```
+First checking the sleep datasets on the basis of weekdays.
+```
+weekly_sleep <- daily_activity_sleep %>% 
+  group_by(SleepWeekday) %>% 
+  summarise(Mean_sleephr = mean(TotalHoursAsleep), Mean_inBed = mean(TotalHoursInBed)) # cal mean sleep hours
+ggplot(data= weekly_sleep, aes(x= SleepWeekday, y = Mean_sleephr)) +
+  geom_bar(stat = "identity", fill = 'grey', color= 'black') +
+  geom_hline(yintercept = 8) +
+  labs(title = "Hours asleep per day in a week", x = "Days of Week", y = "Hours")
+```
+![6_sleep hrs per day](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/0bd81e71-902b-4866-b0c8-941c6105f4a4)
+The data shows that users are not sleeping the recommended more than 7 hours of sleep everyday. As we dont have the demographic data of the users, we cant say anything about their age which is very important in determining the recommended hours of sleep (https://www.cdc.gov/sleep/about_sleep/how_much_sleep.html). 
+
+Now lets perform some corelation analysis to see if one variable is affecting the other.
+#### 4.5.1- Calories vs sleep and daily steps
+```
+ggarrange( 
+  ggplot(data = daily_activity, aes(x = TotalSteps, y = Calories)) +
+  geom_jitter()+
+  geom_smooth(color = "red") +
+  labs(title = "Daily Steps vs Calories", x = "Total Steps", y = "Calories"),
+  ggplot(data = daily_activity_sleep, aes(x = TotalHoursAsleep, y = Calories)) +
+    geom_jitter() +
+    geom_smooth(color = "red") +
+    labs(title = "Sleep vs Calories", x = "Hours Asleep", y = "Calories"))
+```
+![7_calories vs dailysteps and sleep](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/86687c81-2ef3-40a8-81ad-d62b1a46eda8)
+As it is expected there is a positive corelation between total steps taken and total calories burned however there is no corelation between hours spent asleep and calories burned.
+#### 4.5.1- Sleep vs activity
+Now lets see if there is any corelation between the sleep and the active/inactive state of the users.
+```
+p2 <- ggplot(data = daily_activity_sleep, aes(x = TotalSteps, y = TotalHoursAsleep)) +
+  geom_jitter() +
+  geom_smooth(color = "red") +
+  labs(title = "Daily Steps vs Sleep", x = "Daily Steps", y = "Hours") +
+  theme_classic()
+
+p1 <- ggscatter(daily_activity_sleep, x = "TotalMinutesAsleep", y = "SedentaryMinutes", 
+          add = "reg.line",  
+          add.params = list(color = "red", fill = "lightgray"), 
+          conf.int = TRUE,  
+          title = "Sleep vs inactivity",
+          xlab = "Total Minutes Asleep", ylab = "Sendentary Minutes") 
+p1 + stat_cor(method = "pearson") 
+p1 + stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)                                                    
+ggarrange(p2,p1+ stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)) 
+```
+![8_daily steps, inactivity vs sleep](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/35421dfc-3bca-4e56-afca-54deab6f2a1a)
+It is clear that there is no relationship between daily steps taken and calories. However there is a negative corelation between total minutes asleep and sedentary minutes. Which means that according to this analysis of around 30 fitbit users, people who tends to sleep more are less inactive or vice versa. There are studies that confirm the lack of excercise or sedentary lifestyle with sleep issues(https://www.sleepfoundation.org/insomnia/exercise-and-insomnia#references-80044). 
