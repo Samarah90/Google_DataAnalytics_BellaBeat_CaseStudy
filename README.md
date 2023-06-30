@@ -244,6 +244,19 @@ ggplot(data = mean_cal, aes(x = UsersActivityClass, y = meancal)) +
   geom_bar(stat = "identity", fill = 'lightblue', color = 'black') +
   labs(title = "Calories based on User Class", x = "User Activity Class", y = "Mean Calories"))
 ```
-![5_Users_activity](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/3096da3c-10c3-4366-9d6e-5d02323e9da8)
+![5_ users_class](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/d5451fca-7189-4928-97a7-0c3978d126d0)
 In the group of 33 fitbit users, there are more people who are fairly or low active which mean they take around 5,000 - 9,999 per day and are active for 4-5 hours. These users clearly also burns more calories as compared to the low active and sedentary ones.
-
+### 4.4- Hourly steps
+Now that we have got the idea baout the active days of the week and the distribution of active and inactive users in our fitbit datasets, we want to know exactly what part of the whole day can be expected to be most active or inactive. 
+```
+Hourlysteps_viz <- Hourlysteps %>% 
+  group_by(ActivityHour) %>% 
+  summarise(AvgSteps = mean(StepTotal))
+ggplot() +
+  geom_col (data = Hourlysteps_viz, aes(x = ActivityHour, y = AvgSteps, fill = AvgSteps)) +
+  labs(title = "Hourly steps throughout the day", x="", y="") + 
+  scale_fill_gradient(low = "yellow", high = "purple")+
+  theme(axis.text.x = element_text(angle = 90))
+```
+![4_hourly_summary](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/db75796c-fae0-4868-8f56-f67de9a79871)
+As it can be seen people are more active during the afternoon(from around 12pm to 2:00pm) and in the evening (from 4:30pm to 7:00pm). 
