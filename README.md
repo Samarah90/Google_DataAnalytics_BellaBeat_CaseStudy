@@ -299,7 +299,7 @@ ggarrange(
 ```
 ![7_calories vs dailysteps and sleep](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/86687c81-2ef3-40a8-81ad-d62b1a46eda8)
 As it is expected there is a positive corelation between total steps taken and total calories burned however there is no corelation between hours spent asleep and calories burned.
-#### 4.5.1- Sleep vs activity
+#### 4.5.2- Sleep vs activity
 Now lets see if there is any corelation between the sleep and the active/inactive state of the users.
 ```
 p2 <- ggplot(data = daily_activity_sleep, aes(x = TotalSteps, y = TotalHoursAsleep)) +
@@ -319,4 +319,5 @@ p1 + stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)
 ggarrange(p2,p1+ stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)) 
 ```
 ![8_daily steps, inactivity vs sleep](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/35421dfc-3bca-4e56-afca-54deab6f2a1a)
-It is clear that there is no relationship between daily steps taken and calories. However there is a negative corelation between total minutes asleep and sedentary minutes. Which means that according to this analysis of around 30 fitbit users, people who tends to sleep more are less inactive or vice versa. There are studies that confirm the lack of excercise or sedentary lifestyle with sleep issues(https://www.sleepfoundation.org/insomnia/exercise-and-insomnia#references-80044). 
+It is clear that there is no relationship between daily steps taken and calories. However there is a significantl negative corelation between total minutes asleep and sedentary minutes with a negative r value of -0.6 and P < 0.001 . Which means that according to this analysis of around 30 fitbit users, people who tends to sleep less are more inactive or vice versa. There are studies that confirm the lack of excercise or sedentary lifestyle causing sleep issues(https://www.sleepfoundation.org/insomnia/exercise-and-insomnia#references-80044). 
+### 4.5- Device usage
