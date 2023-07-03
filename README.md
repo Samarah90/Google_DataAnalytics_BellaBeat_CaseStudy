@@ -171,7 +171,7 @@ ggplot(active_sed, aes(x = "" , y = Percent, fill = fct_inorder(Type)))+
   ggtitle("Percentage of activity in minutes") +
   theme_void()
 ```
-![2_Percentage of activity in minutesRplot](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/ed3b6dd8-015f-4d1b-afa2-1c5d57f26bcc)
+![2_Percentage of activity in minutesRplot](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/1d50e291-dd97-4f54-814d-eda3fba18f09)
 As it is clearly seen that most of the time is spend being inactive only around 2% of the total time according to our fitbit data is spend being very active. We dived more deeper into the daily activity on the weekly basis.
 ### 4.2- Weekly activity in hours
 Making a dataframe containing the mean of total steps, mean of calories burned, mean of active and sedentary hours spent each day in a week.
@@ -198,7 +198,7 @@ ggarrange(
     labs(title = "Weekly steps data", x = "Days of week", y = "Mean Steps")
   )
 ```
-![3_Weekly_summery](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/ce51d1ec-5071-4609-8b3c-d6707eadeb20)
+![3_Weekly_summery](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/23a0ff46-a9a4-40ab-ae23-a4eef6267ea1)
 Users seems to be most active on Saturday spending around 4 hours being active and taking more than 8,000 steps. On the other hand Sunday seems to be the resting day of the week with less activity. However users are spending around 16hours being sedentary througout the week. Tuesday also seems to be to be a hectic day in terms of total steps taken. Next we wanted to see our activity data on the bases to user Ids.
 ### 4.3- Identifying the user's class based on the total steps
 The total target of 10,000 steps is considered to be a healthy target for the healthy adults. According to the guidelines provided here (https://www.10000steps.org.au/articles/healthy-lifestyles/counting-steps/#:~:text=The%20following%20pedometer%20indices%20have,to%209%2C999%20steps%20per%20day) the users are divied into various categories. This serves the bases of our following analysis.
