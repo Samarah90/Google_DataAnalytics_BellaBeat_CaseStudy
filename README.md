@@ -1,7 +1,7 @@
 # CASE STUDY: Bellabeat Fitness Data Analysis 
 ##### Author: Samarah Rizvi
 
-##### Date: June 5, 2023
+##### Date: July 3, 2023
 
 This case study follows the follwing six data analysis steps:
 ### 1- Ask
