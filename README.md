@@ -319,7 +319,7 @@ p1 + stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)
 ggarrange(p2,p1+ stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)) 
 ```
 ![8_daily steps, inactivity vs sleep](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/35421dfc-3bca-4e56-afca-54deab6f2a1a)
-It is clear that there is no relationship between daily steps taken and calories. However there is a significantl negative corelation between total minutes asleep and sedentary minutes with a negative r value of -0.6 and P < 0.001 . Which means that according to this analysis of around 30 fitbit users, people who tends to sleep less are more inactive or vice versa. There are studies that confirm the lack of excercise or sedentary lifestyle causing sleep issues(https://www.sleepfoundation.org/insomnia/exercise-and-insomnia#references-80044). 
+It is clear that there is no relationship between daily steps taken and calories. However there is a significant negative corelation between total minutes asleep and sedentary minutes with a negative r value of -0.6 and P < 0.001 . Which means that according to this analysis of around 30 fitbit users, people who tends to sleep less are more inactive or vice versa. There are studies that confirm the lack of excercise or sedentary lifestyle causing sleep issues(https://www.sleepfoundation.org/insomnia/exercise-and-insomnia#references-80044). 
 ### 4.6- Device usage
 It is very important for the stakeholders to understand the trend of the smart device usuage among the users so that they can device their marketing strategies accordingly. 
 ```
