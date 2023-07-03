@@ -89,8 +89,8 @@ colnames(daily_activity)
 #### summary
 ```
 glimpse(hourlySteps_merged)
-sum(duplicated(hourlySteps_merged)) #0 duplicated#
-n_distinct(hourlySteps_merged$Id) #33 ids#
+sum(duplicated(hourlySteps_merged)) 
+n_distinct(hourlySteps_merged$Id) 
 ```
 No missing or duplicated values. 33 distinct Ids instead of the reported 30 distinct Ids.
 #### Making a new dataset of HourleySteps with seperate date time column using the lubridate package's parse_date_time()
