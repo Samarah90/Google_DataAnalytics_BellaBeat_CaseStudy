@@ -373,7 +373,7 @@ ggarrange(week_usage, week_usage_1)
 ```
 ![9_data input in week and days](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/d3dc8d54-7790-49e7-b9f7-12a276ec1ff9)
 According to theses results, the users have used the device most frequently during the week from Tue-Thurs. Only half of the users are frequently using the device.
-## 4.6.1- Device usage in minutes per day
+#### 4.6.1- Device usage in minutes per day
 At first merge the daily_activity dataset with the daily_use dataset to filter out the results on the basis of device used.
 ```
 daily_use_merged <- merge(daily_activity, daily_use, by = c("Id"))
