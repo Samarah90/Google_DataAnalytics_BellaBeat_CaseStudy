@@ -509,4 +509,12 @@ From the above results we can draw following conclusion:
 - Out of the users who wear the device between 10-20 days, 27% wear it all day.
 - Out of the users who wear the device between 1- 10 days, 80% water it the whole day.
 These results depicts that wearing the device the whole month does not mean that users will wear it the whole day as well.
-### 5- Conclusion(Share & Act)
+### 5- Conclusion(Share phase)
+- Sedentary minutes are more than active minutes spent. 
+- Saturday is the most active day when users take more than 8000 step, Sunday being the most inactive day.
+- Active users are comparatively less than other classes of the users. 5 hours spent in activity for active and fairly active users. Users taking more daily steps burnt more  calories However, daily steps do not affect sleep.
+- Active time of the day during the afternoon(from around 12pm to 2:00pm) and in the evening (from 4:30pm to 7:00pm). 
+- Sleep hour is not consistent the whole week which is below 8 hours. However, Sleep hours do not affect the calories burnt.
+- Sleep and inactivity have negative correlation. 
+- Users are using their device more from Tueday-Thursday. 50% users are high device users. But high users are not the frequent wearers of the watch the whole day. 
+### 6- Act phase
