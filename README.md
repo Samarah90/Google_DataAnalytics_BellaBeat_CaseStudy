@@ -297,8 +297,9 @@ ggarrange(
     geom_smooth(color = "red") +
     labs(title = "Sleep vs Calories", x = "Hours Asleep", y = "Calories"))
 ```
-![7_calories vs dailysteps and sleep](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/86687c81-2ef3-40a8-81ad-d62b1a46eda8)
+![7_calories vs dailysteps and sleep](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/9b4c9844-e7de-4148-919f-7c84e296c9dd)
 As it is expected there is a positive corelation between total steps taken and total calories burned however there is no corelation between hours spent asleep and calories burned.
+
 #### 4.5.2- Sleep vs activity
 Now lets see if there is any corelation between the sleep and the active/inactive state of the users.
 ```
@@ -318,7 +319,7 @@ p1 + stat_cor(method = "pearson")
 p1 + stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)                                                    
 ggarrange(p2,p1+ stat_cor(p.accuracy = 0.001, r.accuracy = 0.01)) 
 ```
-![8_daily steps, inactivity vs sleep](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/35421dfc-3bca-4e56-afca-54deab6f2a1a)
+![8_daily steps, inactivity vs sleep](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/3c536363-54fd-4bf8-8781-251cddcb4cb3)
 It is clear that there is no relationship between daily steps taken and calories. However there is a significant negative corelation between total minutes asleep and sedentary minutes with a negative r value of -0.6 and P < 0.001 . Which means that according to this analysis of around 30 fitbit users, people who tends to sleep less are more inactive or vice versa. There are studies that confirm the lack of excercise or sedentary lifestyle causing sleep issues(https://www.sleepfoundation.org/insomnia/exercise-and-insomnia#references-80044). 
 ### 4.6- Device usage
 It is very important for the stakeholders to understand the trend of the smart device usuage among the users so that they can device their marketing strategies accordingly. 
@@ -371,7 +372,7 @@ week_usage <- ggplot(data = daily_activity, aes(x=Weekday)) +
   labs(title = "Data Input during the Week",x = "Days of the week", y = "Frequency")
 ggarrange(week_usage, week_usage_1)
 ```
-![9_data input in week and days](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/d3dc8d54-7790-49e7-b9f7-12a276ec1ff9)
+![9_data input in week and days](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/fbd257e5-dce3-473c-9e43-d7db915e0637)
 According to theses results, the users have used the device most frequently during the week from Tue-Thurs. Only half of the users are frequently using the device.
 #### 4.6.1- Device usage in minutes per day
 At first merge the daily_activity dataset with the daily_use dataset to filter out the results on the basis of device used.
@@ -502,7 +503,7 @@ T4 <- ggplot(data = min_lowuse_worn,aes(x = "", y = total_percent, fill= worn)) 
 
 ggarrange(T1, ggarrange(T2,T3,T4, ncol = 3), nrow = 2)
 ```
-![10_Time worn per day](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/77681c31-0b5e-44e1-9f66-cdbbd4c40bc6)
+![10_Time worn per day](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/e920ed4d-b944-4ff2-88fa-c67cf6939faa)
 From the above results we can draw following conclusion:
 - The large percentage are of the users are those who wear the device more than half a day, then come the users who wear the device all day and finally those who wear less than half a day.
 - Out of the users who wear the device between 21-31 days, only 6.8% wear it all day.
