@@ -508,4 +508,5 @@ From the above results we can draw following conclusion:
 - Out of the users who wear the device between 21-31 days, only 6.8% wear it all day.
 - Out of the users who wear the device between 10-20 days, 27% wear it all day.
 - Out of the users who wear the device between 1- 10 days, 80% water it the whole day.
-These results depicts that wearing the device the whole month does not mean that users will wear it the whole day as well. 
+These results depicts that wearing the device the whole month does not mean that users will wear it the whole day as well.
+### 5- Conclusion(Share & Act)
