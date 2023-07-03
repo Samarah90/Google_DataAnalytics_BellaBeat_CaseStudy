@@ -518,3 +518,5 @@ These results depicts that wearing the device the whole month does not mean that
 - Sleep and inactivity have negative correlation. 
 - Users are using their device more from Tueday-Thursday. 50% users are high device users. But high users are not the frequent wearers of the watch the whole day. 
 ### 6- Act phase
+We have analysed the datasets of around 30 Fitbit users as a task to find trends in the datasets that will help the  Bellabeat marketing strategy team. We have limitation in our datasets for instance, we don’t have any demographic information about the users and as Bellabeat develops beautifully designed technology to inform and inspires women around the world, it is very important to know the demographic of the device users, only then we can understand the trends of the women health practices and device usage. Second limitation is that the sample set is very small to represent the population as whole. Therefore, it is very important to keep analysing the datasets that have a complete metadata and as well as a decent amount of sample sets to represent the whole community.
+Nonetheless I provide following recommendation based on my findings:
