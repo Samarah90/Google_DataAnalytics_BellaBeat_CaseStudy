@@ -258,7 +258,7 @@ ggplot() +
   scale_fill_gradient(low = "yellow", high = "purple")+
   theme(axis.text.x = element_text(angle = 90))
 ```
-![4_hourly_summary](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/db75796c-fae0-4868-8f56-f67de9a79871)
+![4_hourly_summary](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/328f4d3e-e995-45f8-91e9-1cd582922a61)
 As it can be seen people are more active during the afternoon(from around 12pm to 2:00pm) and in the evening (from 4:30pm to 7:00pm). 
 
 ### 4.5- Merging the sleep_day and daily_activity datasets for Corelation analysis
