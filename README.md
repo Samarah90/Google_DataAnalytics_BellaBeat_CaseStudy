@@ -108,11 +108,11 @@ glimpse(sleepDay_merged)
 #### Count the missing, duplicated and distinct Ids
 ```
 dim(sleepDay_merged)
-sum(is.na(sleepDay_merged)) #no missing value
-sum(duplicated(sleepDay_merged)) #3 duplicates#
+sum(is.na(sleepDay_merged)) 
+sum(duplicated(sleepDay_merged)) 
 sleep_day <- sleepDay_merged[!duplicated(sleepDay_merged), ]
-sum(duplicated(sleep_day)) #no duplicated values#
-n_distinct(sleepDay_merged$Id) #24 distant ids#
+sum(duplicated(sleep_day)) 
+n_distinct(sleepDay_merged$Id) 
 ```
 No missing values but three duplicated values. So made a new dataset of Sleep_day with the removed duplicated values. 24 distinct Ids instead of 33 as in the previous datasets.
 #### seperate date time column using the lubridate package's parse_date_time(), new column of weekdays from the date and new column for sleep in hours
@@ -236,13 +236,13 @@ Now grouping the user's activity classes to see how many hours a certain user cl
 ggarrange(
   ggplot(data = daily_activity_ids, aes(x = UsersActivityClass)) +
     geom_bar(fill='blue', color='black') +
-    labs(title = "Users Activity", x = "classes of users"),
+    labs(title = "Users activity", x = "User activity class"),
   ggplot(data = user_class, aes(x = UsersActivityClass , y = ActiveHours)) +
     geom_bar(stat = "identity", fill ='steelblue', color= 'black') +
-    labs(title = "users vs active hours", x = "Users Class", y = "Mean Active Hours"),
-ggplot(data = mean_cal, aes(x = UsersActivityClass, y = meancal)) +
+    labs(title = "Users vs active hours", x = "User activity class", y = "Mean active hours"),
+ggplot(data = user_class, aes(x = UsersActivityClass, y = MeanCal)) +
   geom_bar(stat = "identity", fill = 'lightblue', color = 'black') +
-  labs(title = "Calories based on User Class", x = "User Activity Class", y = "Mean Calories"))
+  labs(title = "Users vs calories", x = "User activity class", y = "Mean calories"))
 ```
 ![5_ users_class](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/90fa2a8f-bc31-43cf-bc5f-b464beb64e77)
 In the group of 33 fitbit users, there are more people who are fairly or low active which mean they take around 5,000 - 9,999 per day and are active for 4-5 hours. These users clearly also burns more calories as compared to the low active and sedentary ones.
