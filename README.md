@@ -502,4 +502,10 @@ T4 <- ggplot(data = min_lowuse_worn,aes(x = "", y = total_percent, fill= worn)) 
 
 ggarrange(T1, ggarrange(T2,T3,T4, ncol = 3), nrow = 2)
 ```
-
+![10_Time worn per day](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/77681c31-0b5e-44e1-9f66-cdbbd4c40bc6)
+From the above results we can draw following conclusion:
+- The large percentage are of the users are those who wear the device more than half a day, then come the users who wear the device all day and finally those who wear less than half a day.
+- Out of the users who wear the device between 21-31 days, only 6.8% wear it all day.
+- Out of the users who wear the device between 10-20 days, 27% wear it all day.
+- Out of the users who wear the device between 1- 10 days, 80% water it the whole day.
+These results depicts that wearing the device the whole month does not mean that users will wear it the whole day as well. 
