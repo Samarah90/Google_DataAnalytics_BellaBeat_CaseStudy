@@ -281,7 +281,7 @@ ggplot(data= weekly_sleep, aes(x= SleepWeekday, y = Mean_sleephr)) +
   geom_hline(yintercept = 8) +
   labs(title = "Hours asleep per day in a week", x = "Days of Week", y = "Hours")
 ```
-![6_sleep hrs per day](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/0bd81e71-902b-4866-b0c8-941c6105f4a4)
+![6_sleep hrs per day](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/98f6fd86-33a0-4c9a-9958-4ad54f0d24c0)
 The data shows that users are not sleeping the recommended more than 7 hours of sleep everyday. As we dont have the demographic data of the users, we cant say anything about their age which is very important in determining the recommended hours of sleep (https://www.cdc.gov/sleep/about_sleep/how_much_sleep.html). 
 
 Now lets perform some corelation analysis to see if one variable is affecting the other.
