@@ -373,3 +373,133 @@ ggarrange(week_usage, week_usage_1)
 ```
 ![9_data input in week and days](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/d3dc8d54-7790-49e7-b9f7-12a276ec1ff9)
 According to theses results, the users have used the device most frequently during the week from Tue-Thurs. Only half of the users are frequently using the device.
+## 4.6.1- Device usage in minutes per day
+At first merge the daily_activity dataset with the daily_use dataset to filter out the results on the basis of device used.
+```
+daily_use_merged <- merge(daily_activity, daily_use, by = c("Id"))
+head(daily_use_merged)
+```
+Make a new dataset where the total minutes from the merged datasets are added and converted into percentage by dividing the sum of all the minutes by 1440 min(24hrs) multiplying by 100. Later classify the ids on the basis of percentage of worn minutes. 
+```
+Total_min_worn <- daily_use_merged %>% 
+mutate(min_worn = VeryActiveMinutes + FairlyActiveMinutes + LightlyActiveMinutes + SedentaryMinutes) %>% 
+mutate(percent_worn = min_worn/1440 * 100) %>% 
+mutate(worn = case_when(percent_worn == 100 ~ "All day",
+                        percent_worn < 100 & percent_worn >= 50 ~ "More than half a day",
+                        percent_worn < 50 & percent_worn >= 0 ~ "Less than half a day"))
+head(Total_min_worn)
+```
+Now we will make four separate datasets. One dataset representing the percentage of device usage in terms of minutes. Second dataset represents the group of  users that are considered high device users meaning device worn all day. Third dataset represents the group of users that are considered moderate device users meaning device worn more than half a day and finally fourth dataset represents the group of users that are considered low device users meaning device worn less than half a day.
+```
+min_worn_percent <- Total_min_worn %>% 
+  group_by(worn) %>% 
+  summarise(total = n()) %>%  #count the nr of obv#
+  mutate(totals = sum(total)) %>% 
+  group_by(worn) %>% 
+  summarise(total_percent = total/totals) %>% 
+  mutate(labels = scales::percent(total_percent))
+
+min_highuse_worn <- Total_min_worn %>% 
+  filter(usage == "High use") %>% 
+  group_by(worn) %>% 
+  summarize(total = n()) %>% 
+  mutate(totals = sum(total)) %>% 
+  group_by(worn) %>% 
+  summarise(total_percent = total/totals) %>% 
+  mutate(labels = scales::percent(total_percent))
+
+min_moderateuse_worn <- Total_min_worn %>% 
+  filter(usage == "Moderate use") %>% 
+  group_by(worn) %>% 
+  summarize(total = n()) %>% 
+  mutate(totals = sum(total)) %>% 
+  group_by(worn) %>% 
+  summarise(total_percent = total/totals) %>% 
+  mutate(labels = scales::percent(total_percent))
+
+min_lowuse_worn <- Total_min_worn %>% 
+  filter(usage == "Low use") %>% 
+  group_by(worn) %>% 
+  summarize(total = n()) %>% 
+  mutate(totals = sum(total)) %>% 
+  group_by(worn) %>% 
+  summarise(total_percent = total/totals) %>% 
+  mutate(labels = scales::percent(total_percent))
+head(min_worn_percent)
+head(min_highuse_worn)
+head(min_moderateuse_worn)
+head(min_lowuse_worn)
+```
+Now visulizing the results
+```
+T1 <- ggplot(data = min_worn_percent,aes(x = "", y = total_percent, fill= worn)) +
+  geom_bar(stat = "identity", width = 1)+
+  coord_polar("y", start=0)+
+  theme_minimal()+ #A minimalistic theme with no background annotations#
+  theme(axis.title.x= element_blank(),
+        axis.title.y = element_blank(),
+        panel.border = element_blank(), 
+        panel.grid = element_blank(), 
+        axis.ticks = element_blank(),
+        axis.text.x = element_blank(),
+        plot.title = element_text(hjust = 0.5, size=14, face = "bold"),
+        plot.subtitle = element_text(hjust = 0.5)) +
+  scale_fill_manual(values = c("#009999","#00ffff","#ccffff")) +
+  geom_text(aes(label = labels),
+            position = position_stack(vjust = 0.5), size = 3.5)+
+  labs(title="Time worn per day", subtitle = "Total Users")
+
+T2 <- ggplot(data = min_highuse_worn,aes(x = "", y = total_percent, fill= worn)) +
+  geom_bar(stat = "identity", width = 1)+
+  coord_polar("y", start=0)+
+  theme_minimal()+ #A minimalistic theme with no background annotations#
+  theme(axis.title.x= element_blank(),
+        axis.title.y = element_blank(),
+        panel.border = element_blank(), 
+        panel.grid = element_blank(), 
+        axis.ticks = element_blank(),
+        axis.text.x = element_blank(),
+        plot.title = element_text(hjust = 0.5, size=14, face = "bold"),
+        plot.subtitle = element_text(hjust = 0.5)) +
+  scale_fill_manual(values = c("#009999","#00ffff","#ccffff")) +
+  geom_text(aes(label = labels),
+            position = position_stack(vjust = 0.5), size = 3)+
+  labs(title="", subtitle = "High use - Users")
+
+T3 <- ggplot(data = min_moderateuse_worn,aes(x = "", y = total_percent, fill= worn)) +
+  geom_bar(stat = "identity", width = 1)+
+  coord_polar("y", start=0)+
+  theme_minimal()+ #A minimalistic theme with no background annotations#
+  theme(axis.title.x= element_blank(),
+        axis.title.y = element_blank(),
+        panel.border = element_blank(), 
+        panel.grid = element_blank(), 
+        axis.ticks = element_blank(),
+        axis.text.x = element_blank(),
+        plot.title = element_text(hjust = 0.5, size=14, face = "bold"),
+        plot.subtitle = element_text(hjust = 0.5)) +
+  scale_fill_manual(values = c("#009999","#00ffff","#ccffff")) +
+  geom_text(aes(label = labels),
+            position = position_stack(vjust = 0.5), size = 3)+
+  labs(title="", subtitle = "Moderate use - Users")
+
+T4 <- ggplot(data = min_lowuse_worn,aes(x = "", y = total_percent, fill= worn)) +
+  geom_bar(stat = "identity", width = 1)+
+  coord_polar("y", start=0)+
+  theme_minimal()+ #A minimalistic theme with no background annotations#
+  theme(axis.title.x= element_blank(),
+        axis.title.y = element_blank(),
+        panel.border = element_blank(), 
+        panel.grid = element_blank(), 
+        axis.ticks = element_blank(),
+        axis.text.x = element_blank(),
+        plot.title = element_text(hjust = 0.5, size=14, face = "bold"),
+        plot.subtitle = element_text(hjust = 0.5)) +
+  scale_fill_manual(values = c("#009999","#00ffff","#ccffff")) +
+  geom_text(aes(label = labels),
+            position = position_stack(vjust = 0.5), size = 3)+
+  labs(title="", subtitle = "Low use - Users")
+
+ggarrange(T1, ggarrange(T2,T3,T4, ncol = 3), nrow = 2)
+```
+
