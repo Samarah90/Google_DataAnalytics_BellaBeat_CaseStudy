@@ -275,7 +275,7 @@ First checking the sleep datasets on the basis of weekdays.
 ```
 weekly_sleep <- daily_activity_sleep %>% 
   group_by(SleepWeekday) %>% 
-  summarise(Mean_sleephr = mean(TotalHoursAsleep), Mean_inBed = mean(TotalHoursInBed)) # cal mean sleep hours
+  summarise(Mean_sleephr = mean(TotalHoursAsleep), Mean_inBed = mean(TotalHoursInBed)) 
 ggplot(data= weekly_sleep, aes(x= SleepWeekday, y = Mean_sleephr)) +
   geom_bar(stat = "identity", fill = 'grey', color= 'black') +
   geom_hline(yintercept = 8) +
@@ -349,7 +349,7 @@ Then we have made a new dataframe calculating the percentage of the device usage
 week_usage_1 <- ggplot(data = percent_use, aes(x = "", y = total_percent, fill=usage)) +
   geom_bar(stat = "identity", width = 1)+
   coord_polar("y", start=0)+
-  theme_minimal()+ #A minimalistic theme with no background annotations#
+  theme_minimal()+ 
   theme(axis.title.x= element_blank(),
         axis.title.y = element_blank(),
         panel.border = element_blank(), 
