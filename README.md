@@ -453,7 +453,7 @@ T1 <- ggplot(data = min_worn_percent,aes(x = "", y = total_percent, fill= worn))
 T2 <- ggplot(data = min_highuse_worn,aes(x = "", y = total_percent, fill= worn)) +
   geom_bar(stat = "identity", width = 1)+
   coord_polar("y", start=0)+
-  theme_minimal()+ #A minimalistic theme with no background annotations#
+  theme_minimal()+ 
   theme(axis.title.x= element_blank(),
         axis.title.y = element_blank(),
         panel.border = element_blank(), 
@@ -470,7 +470,7 @@ T2 <- ggplot(data = min_highuse_worn,aes(x = "", y = total_percent, fill= worn))
 T3 <- ggplot(data = min_moderateuse_worn,aes(x = "", y = total_percent, fill= worn)) +
   geom_bar(stat = "identity", width = 1)+
   coord_polar("y", start=0)+
-  theme_minimal()+ #A minimalistic theme with no background annotations#
+  theme_minimal()+ 
   theme(axis.title.x= element_blank(),
         axis.title.y = element_blank(),
         panel.border = element_blank(), 
@@ -504,18 +504,18 @@ T4 <- ggplot(data = min_lowuse_worn,aes(x = "", y = total_percent, fill= worn)) 
 ggarrange(T1, ggarrange(T2,T3,T4, ncol = 3), nrow = 2)
 ```
 ![10_Time worn per day](https://github.com/Samarah90/Google_DataAnalytics_BellaBeat_CaseStudy/assets/120459742/e920ed4d-b944-4ff2-88fa-c67cf6939faa)
-From the above results we can draw following conclusion:
-- The large percentage are of the users are those who wear the device more than half a day, then come the users who wear the device all day and finally those who wear less than half a day.
+From the above results we can draw following conclusions:
+- The large percentage are of the users who wear the device more than half a day, then come the users who wear the device all day and finally those who wear less than half a day.
 - Out of the users who wear the device between 21-31 days, only 6.8% wear it all day.
 - Out of the users who wear the device between 10-20 days, 27% wear it all day.
-- Out of the users who wear the device between 1- 10 days, 80% water it the whole day.
-These results depicts that wearing the device the whole month does not mean that users will wear it the whole day as well.
+- Out of the users who wear the device between 1- 10 days, 80% wear it the whole day.
+These results depicts that wearing smart device the whole month does not mean that users will wear it the whole day as well.
 ### 5- Conclusion(Share phase)
 - Sedentary minutes are more than active minutes spent. 
 - Saturday is the most active day when users take more than 8000 step, Sunday being the most inactive day.
-- Active users are comparatively less than other classes of the users. 5 hours spent in activity for active and fairly active users. Users taking more daily steps burnt more  calories However, daily steps do not affect sleep.
+- Active users are comparatively less than other classes of the users. 5 hours spent in activity for active and fairly active users. Users taking more daily steps burned more calories. However, daily steps do not affect sleep.
 - Active time of the day during the afternoon(from around 12pm to 2:00pm) and in the evening (from 4:30pm to 7:00pm). 
-- Sleep hour is not consistent the whole week which is below 8 hours. However, Sleep hours do not affect the calories burnt.
+- Sleep hour is not consistent the whole week which is below 8 hours. However, Sleep hours do not affect the calories burned.
 - Sleep and inactivity have negative correlation. 
 - Users are using their device more from Tueday-Thursday. 50% users are high device users. But high users are not the frequent wearers of the watch the whole day. 
 ### 6- Act phase
@@ -523,7 +523,7 @@ We have analysed the datasets of around 30 Fitbit users as a task to find trends
 Nonetheless I provide following recommendation based on my findings:
 - People seems to spend a lot more time in sedentary mode. They take around 8000 steps(less than recommended 10000 steps) on their most active day that is Saturday. It seems that people are busy during weekdays doing their jobs and seemingly those who work in offices or work from home are usually inactive during weekdays. An alarm or a notification system should be introduced through the Bellabeat app. If the Bellabeat wellness tracker detects that the user is sedentary for a long period of time, a notification to stand up or take few steps should pop up reminding them to be a little more active. 
 - As our data shows that users are more active during the afternoon and evening. It is a well-established fact that early morning outdoor exercise is a very good start of the day but the users tend to be least active during early morning. An early morning notification with a motivational quote can encourage users to start their day with some activity.
-- Users should have at least 7-8 hours of good night sleep to wake up fresh and be more active in the morning. However our users doesn’t seem to have a recommended 7 hours sleep everyday. A friendly ‘go to bed’ remainder with an informative fun fact can be useful to achieve a good sleep at night.
+- Users should have at least 7-8 hours of good night sleep to wake up fresh and be more active in the morning. However our users do not seem to have a recommended 7 hours sleep everyday. A friendly ‘go to bed’ remainder with an informative fun fact can be useful to achieve a good sleep at night.
 - One very interesting finding is that sleep and inactivity has a negative correlation that means, more sedentary lifestyle can lead to less hours of sleep.  
-- Other than notifications, friendly reminders, or encouraging quotes, introducing weekly and monthly reward-based system can also be very useful. For example: If a user wakes up early morning and exercise, takes at least 10,000 steps everyday in a week, they unlock a new feature on their bellabeat device, that can be a new smartwatch background or a medalor may be some discount coupons on health products. 
+- Other than notifications, friendly reminders, or encouraging quotes, introducing weekly and monthly reward-based system can also be very useful. For example: If a user wakes up early morning and exercise, takes at least 10,000 steps everyday in a week, they unlock a new feature on their bellabeat device, that can be a new smartwatch background or a medal or may be some discount coupons on health products. 
 - Our data shows that only 50% users wear the device the whole month but that doesn’t mean they wear it the whole day. In order to make the users wear the device more frequently and regularly, it is important to provide some benefits to the loyal users. For instance, if users use the device regularly every day for more than 6 months, Bellabeat can reduce the price of their membership program for these users. And more dedicated users can even qualify for claiming free membership. 
